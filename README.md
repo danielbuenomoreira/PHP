@@ -25,4 +25,4 @@ A versão funcional, com todos os cálculos e interações com a API, está hosp
 
 ➡️ **[https://danielmoreira.kesug.com/](https://danielmoreira.kesug.com/)**
 
-A pré-visualização estática no GitHub Pages (`danielbuenomoreira.github.io/PHP/`) **não** executará o código PHP.
+A pré-visualização estática no GitHub Pages **[https://danielbuenomoreira.github.io/PHP/](https://danielbuenomoreira.github.io/PHP/)** **não** executará o código PHP.
