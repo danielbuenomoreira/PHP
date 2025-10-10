@@ -1,5 +1,103 @@
 @charset "UTF-8";
 
+:root {
+    --bgImage: url(https://512pixels.net/wp-content/uploads/2025/06/11-0-Color-Day-thumbnails.jpg);
+    --sizeVar: 25vmin;
+    --animSpeed: 4000ms;
+}
+
+#wrapper {
+    position: relative;
+    inset: 0;
+    background-image: var(--bgImage);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    width: 90%;
+    /* Ocupa x% da largura da página */
+    /* max-width: 800px; /* Um limite para não ficar muito largo em telas grandes */
+    height: 800px;
+    /* Uma altura fixa, ajuste como preferir! */
+    margin-top: 40px;
+    /* Cria um espaço entre o <main> e o <wrapper> */
+    border-radius: 10px;
+    /* Para arredondar as bordas */
+    overflow: hidden;
+    /* Garante que a animação não "vaze" para fora do wrapper */
+}
+
+.glass {
+    position: absolute;
+    width: var(--sizeVar);
+    height: var(--sizeVar);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0.1vw 0.1vw 0 #ffff33;
+    animation: glassAnim var(--animSpeed) cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+
+.glass::after {
+    content: "";
+    position: absolute;
+    height: 90%;
+    width: 90%;
+    top: 5%;
+    left: 5%;
+    border-radius: inherit;
+    background-image: var(--bgImage);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(var(--sizeVar)/10);
+}
+
+.glass::before {
+    content: "";
+    position: absolute;
+    height: 150%;
+    width: 150%;
+    top: -25%;
+    left: -25%;
+    backdrop-filter: blur(calc(var(--sizeVar)/10)) contrast(500%);
+}
+
+.glass:nth-of-type(2) {
+    animation-delay: calc(var(--animSpeed)/4*-3);
+}
+
+.glass:nth-of-type(3) {
+    animation-delay: calc(var(--animSpeed)/4*-2);
+}
+
+.glass:nth-of-type(4) {
+    animation-delay: calc(var(--animSpeed)/4*-1);
+}
+
+@keyframes glassAnim {
+    0% {
+        top: 10%;
+        left: 10%;
+    }
+    25% {
+        top: 10%;
+        left: calc(90% - var(--sizeVar));
+    }
+    50% {
+        top: calc(90% - var(--sizeVar));
+        left: calc(90% - var(--sizeVar));
+    }
+    75% {
+        top: calc(90% - var(--sizeVar));
+        left: 10%;
+    }
+    100% {
+        top: 10%;
+        left: 10%;
+    }
+}
+
 * {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     box-sizing: border-box;
@@ -19,7 +117,10 @@ body {
     align-items: center;
 }
 
-header, main, section, article {
+header,
+main,
+section,
+article {
     max-width: 700px;
 }
 
@@ -29,20 +130,27 @@ header {
     text-shadow: 3px 3px 0px black;
 }
 
-header > h4 {
+header>h4 {
     color: white;
 }
 
-label, details, th, td {
+label,
+details,
+th,
+td {
     color: white;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
     color: #372991;
     margin: 0 0 10px 0;
 }
 
-main, section, article {
+main,
+section,
+article {
     background-color: white;
     padding: 15px;
     margin-bottom: 20px;
@@ -117,7 +225,7 @@ table.divisao td {
     font-size: 2.5em;
 }
 
-table.divisao  tr:nth-child(1) td:nth-child(2) {
+table.divisao tr:nth-child(1) td:nth-child(2) {
     border-bottom: 3px solid black;
     border-left: 3px solid black;
 }
@@ -130,7 +238,7 @@ table.divisao tr:nth-child(2) td:nth-child(1) {
     text-decoration: underline;
 }
 
-ul > li::marker {
+ul>li::marker {
     color: #372991;
 }
 
@@ -154,7 +262,18 @@ form label {
     border-radius: 5px;
 }
 
-input[type=text], [type=number], select, input[type=date], input[type=datetime], input[type=email], input[type=month], input[type=password], input[type=range], input[type=tel], input[type=time], input[type=week] {
+input[type=text],
+[type=number],
+select,
+input[type=date],
+input[type=datetime],
+input[type=email],
+input[type=month],
+input[type=password],
+input[type=range],
+input[type=tel],
+input[type=time],
+input[type=week] {
     width: 100%;
     padding: 12px 20px;
     font-size: 1em;
@@ -164,7 +283,7 @@ input[type=text], [type=number], select, input[type=date], input[type=datetime],
     border-radius: 4px;
     box-sizing: border-box;
 }
-  
+
 input[type=submit] {
     width: 100%;
     background-color: #4CAF50;
@@ -176,7 +295,7 @@ input[type=submit] {
     border-radius: 4px;
     cursor: pointer;
 }
-  
+
 input[type=submit]:hover {
     background-color: #45a049;
 }
@@ -197,7 +316,8 @@ input[type=reset]:hover {
     background-color: #c27013;
 }
 
-input[type=button], button {
+input[type=button],
+button {
     width: 100%;
     background-color: #372991;
     font-size: 1em;
@@ -209,7 +329,8 @@ input[type=button], button {
     cursor: pointer;
 }
 
-input[type=button]:hover, button:hover {
+input[type=button]:hover,
+button:hover {
     background-color: #291f6c;
 }
 
@@ -217,7 +338,7 @@ fieldset {
     border: 0.5px dotted #372991;
 }
 
-fieldset > legend {
+fieldset>legend {
     font-size: 0.8em;
     font-weight: 100;
     background-color: rgba(55, 41, 145, 0.2);
@@ -225,7 +346,8 @@ fieldset > legend {
     border-radius: 5px;
 }
 
-input[type=radio] + label, input[type=checkbox] + label {
+input[type=radio]+label,
+input[type=checkbox]+label {
     display: inline-block;
     font-size: 1em;
     background-color: rgba(0, 0, 0, 0);

@@ -1,27 +1,27 @@
 <?php
-date_default_timezone_set('America/Sao_Paulo'); // Define o fuso horário
+// O fuso horário é necessário para a parte da cotação do dólar.
+date_default_timezone_set('America/Sao_Paulo');
 
 $salario = '';
 $resultadoDizimo = '';
 $resultadoOferta = '';
 
+// Lógica para o cálculo do Dízimo e Oferta
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Pega e converte o valor do salário do formulário
     $salario = floatval(str_replace(',', '.', $_POST['salario'] ?? ''));
 
     if ($salario > 0) {
+        // Realiza os cálculos
         $dizimo = $salario * 0.10;
         $oferta = $salario * 0.05;
 
+        // Formata os resultados para exibição
         $resultadoDizimo = number_format($dizimo, 2, ',', '.');
         $resultadoOferta = number_format($oferta, 2, ',', '.');
 
-        // Monta a linha para salvar
-        $data = date('d/m/Y H:i:s');
-        $linha = "$data | Salário: R$ " . number_format($salario, 2, ',', '.') . " | Dízimo: R$ $resultadoDizimo | Oferta: R$ $resultadoOferta\n";
-
-        // Salva no arquivo
-        file_put_contents('historico_dizimo.txt', $linha, FILE_APPEND);
     } else {
+        // Mensagem de erro se o valor não for válido
         $resultadoDizimo = 'Digite um valor válido.';
     }
 }
@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <main>
-        <!-- Seção do Dízimo e Oferta -->
         <section class="dizimo-oferta">
             <h1>Calculadora de Dízimo e Oferta:</h1>
             <form method="POST" action="">
@@ -67,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </section>
         </section>
 
-        <!-- Seção do Conversor de Moedas -->
         <section class="conversor-moedas">
             <h1>Cotação do Dólar:</h1>
             <form action="" method="get">
@@ -81,34 +79,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // --- INÍCIO DA LÓGICA INTELIGENTE PARA ACHAR A ÚLTIMA COTAÇÃO ---
 
-                    // Define o fuso horário correto para não haver erros de data
-                    date_default_timezone_set('America/Sao_Paulo');
-
-                    // Pega a data de hoje como ponto de partida
                     $dataAlvo = new DateTime();
 
-                    // 1. VERIFICA A HORA: Se for antes das 14h, a cotação do dia ainda não saiu.
-                    //    Então, nosso ponto de partida para a busca será ontem.
                     if ((int)$dataAlvo->format('H') < 14) {
                         $dataAlvo->modify('-1 day');
                     }
 
-                    // 2. VERIFICA FIM DE SEMANA: Se a data for um sábado (6) ou domingo (7),
-                    //    volta no tempo até encontrar um dia de semana.
-                    //    O formato 'N' retorna 1 para segunda-feira e 7 para domingo.
                     while ($dataAlvo->format('N') >= 6) {
                         $dataAlvo->modify('-1 day');
                     }
 
-                    // Neste ponto, $dataAlvo contém a data do último dia útil com cotação publicada.
                     $fim = $dataAlvo->format('m-d-Y');
-
-                    // A data de início pode ser a mesma da final, pois só queremos a última cotação.
                     $inicio = $fim;
 
                     // --- FIM DA LÓGICA INTELIGENTE ---
 
-                    // Agora, montamos a URL com a certeza de que estamos pedindo por um dia que tem dados
                     $url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial=\'' . $inicio . '\'&@dataFinalCotacao=\'' . $fim . '\'&$top=1&$orderby=dataHoraCotacao%20desc&$format=json&$select=cotacaoCompra,dataHoraCotacao';
 
                     $response = @file_get_contents($url);
@@ -119,7 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $dados = json_decode($response, true);
 
                         if (empty($dados['value'])) {
-                            // Esta mensagem agora só apareceria em caso de um feriado, o que podemos refinar depois se quiser
                             echo "<p><strong>Não foi possível obter a cotação.</strong> Pode ser um feriado. Tente novamente mais tarde.</p>";
                         } else {
                             $cotacao = $dados['value'][0]['cotacaoCompra'];
