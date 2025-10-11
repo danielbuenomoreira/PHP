@@ -10,23 +10,37 @@
 
 <body>
 	<header>
-		<h1>Bem vindo! Criei este projeto para treinar PHP!</h1>
+		<h1>Olá! Seja bem-vindo(a) à minha página de projetos.</h1>
 	</header>
-	<main>
-		<h2>Aqui estão uns exemplos de exercícios que fiz em PHP:</h2>
 
-		<ul>
-			<li><a href="AnalisadorDeNumeroReal/" target="_blank">Analisador de número real</a></li>
-			<li><a href="calculadora_dizimo_dolar/" target="_blank">Calculadora de dízimo e cotação do dólar</a></li>
-			<li><a href="exemplo_formulário/" target="_blank">Exemplo de formulário</a></li>
-			<li><a href="ExemploSiteFrontEnd_e_PHP/" target="_blank">Exemplo de site com HTML, CSS, JS e PHP</a></li>
-			<li><a href="ExercicioSemantica_e_SuperGlobaisPHP/form.html" target="_blank">Exercício de semântica HTML + Superglobais no PHP</a></li>
-			<li><a href="FuncoesAritmeticasPHP_SalarioMinimo/" target="_blank">Funções aritméticas do PHP e cálculo de salário mínimo</a></li>
-			<li><a href="OlaMundo_AnatomiaDivisao/" target="_blank">Olá, Mundo! e Anatomia de uma divisão</a></li>
-			<li><a href="OutrasFormatacoesHTML/" target="_blank">___Outras formatações em HTML</a></li>
-			<li><a href="SorteadorNumeros_TagsPoucoUsadas/" target="_blank">Sorteador e tags pouco usadas</a></li>
-			<li><a href="TesteTiposPrimitivos/" target="_blank">___Teste de tipos primitivos</a></li>
-		</ul>
+	<main>
+		<article>
+			<h2>Exercícios de Estudo</h2>
+			<p>Criei esta coleção para colocar em prática o que venho estudando em programação, com um foco especial em PHP, mas sempre combinando com o poder do CSS e a interatividade do JavaScript. 😊</p>
+			<ul>
+				<li><a href="AnalisadorDeNumero_Formatacao_Animacao/" target="_blank">Analisador de número/Formatação de números/Animação</a></li>
+				<li><a href="calculadora_dizimo_dolar/" target="_blank">Calculadora de dízimo e cotação do dólar</a></li>
+				<li><a href="exemplo_formulário/" target="_blank">Exemplo de formulário</a></li>
+				<li><a href="ExemploSiteFrontEnd_e_PHP/" target="_blank">Exemplo de site com HTML, CSS, JS e PHP</a></li>
+				<li><a href="ExercicioSemantica_e_SuperGlobaisPHP/form.html" target="_blank">Exercício de semântica HTML + Superglobais no PHP</a></li>
+				<li><a href="FuncoesAritmeticasPHP_SalarioMinimo/" target="_blank">Funções aritméticas do PHP e cálculo de salário mínimo</a></li>
+				<li><a href="OlaMundo_AnatomiaDivisao/" target="_blank">Olá, Mundo! e Anatomia de uma divisão</a></li>
+				<li><a href="OutrasFormatacoesHTML/" target="_blank">___Outras formatações em HTML</a></li>
+				<li><a href="SorteadorNumeros_TagsPoucoUsadas/" target="_blank">Sorteador e tags pouco usadas</a></li>
+				<li><a href="TesteTiposPrimitivos/" target="_blank">___Teste de tipos primitivos</a></li>
+			</ul>
+		</article>
+
+		<article>
+			<h2>Meus Projetos no GitHub e Redes Sociais</h2>
+			<p>Além destes exercícios, sinta-se à vontade para explorar meus outros projetos no GitHub e se conectar através das minhas redes. Os principais links estão listados abaixo:</p>
+			<ul>
+				<li><a href="https://danielbuenomoreira.github.io/QuemSouEu/" target="_blank">Página de Contatos e Redes Sociais</a></li>
+				<li><a href="https://github.com/danielbuenomoreira" target="_blank"><strong>Perfil no GitHub</strong></a> – Onde centralizo todos os meus repositórios públicos.</li>
+				<li><a href="https://github.com/danielbuenomoreira/NovoHinarioAdventista" target="_blank"><strong>Novo Hinário Adventista completo offline</strong></a> – Um projeto desktop feito em Python e convertido para executável.</li>
+				<li><a href="https://github.com/danielbuenomoreira/BibliaSagrada" target="_blank"><strong>Bíblia Sagrada</strong></a> – Uma versão limpa e sem anúncios da Bíblia Sagrada, que desenvolvi para facilitar a leitura e o estudo.</li>
+			</ul>
+		</article>
 	</main>
 
 	<div class="animation-box">
