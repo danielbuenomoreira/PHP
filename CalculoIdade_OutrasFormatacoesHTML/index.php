@@ -4,12 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outras formatações</title>
+    <title>Cálculo de idade e Outras formatações</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <?php
+        $atual = date("Y");
+        $nasc = $_GET['nasc'] ?? '1992';
+        $ano = $_GET['ano'] ?? $atual;
+    ?>
     <main>
+        <article>
+            <h1>Calculando a sua Idade</h1>
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="get">
+                <label for="nasc">Em que ano você nasceu?</label>
+                <input type="number" name="nasc" id="nasc" min="1500" value="<?=$nasc?>">
+                <label for="ano">Quer saber sua idade em que ano? (atualmente estamos em <strong><?=$atual?></strong>)</label>
+                <input type="number" name="ano" id="ano" min="1900" value="<?=$ano?>">
+                <input type="submit" name="calcular_idade" value="Qual será minha idade?">
+            </form>
+            <?php
+            // VERIFICAÇÃO: Este bloco só aparece se o formulário de soma for enviado
+            if (isset($_GET['calcular_idade'])) {
+                //$ma = ($valor1 + $valor2) / 2;
+                //$mp = ($valor1 * $peso1 + $valor2 * $peso2) / ($peso1 + $peso2);
+
+                echo <<<HTML
+                <section>
+                    <h2>Resultado:</h2>
+                    <p>Quem nasceu em {} vai ter <strong>{}</strong> anos em {}!</p>
+                </section>
+                HTML;
+            }
+            ?>
+        </article>
         <article>
             <h1>Outras formatações</h1>
             <h2>Código-fonte / Pré-formatação</h2>
