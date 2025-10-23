@@ -87,17 +87,26 @@
             </form>
         </article>
         <section>
-            <h2>Resultado final:</h2>
             <?php
             if (isset($_GET['calc_sal'])) {
-                $total = intdiv($salario, $salminimo);
-                $diferenca = $salario % $salminimo;
+                // 1. Converta o salário (que vem como string) para float
+                $salario_float = (float)$salario;
+
+                // 2. Calcule o total de salários usando floor() (arredondar para baixo)
+                // Esta é a maneira correta de encontrar a parte inteira da divisão de floats
+                $total = floor($salario_float / $salminimo);
+
+                // 3. Calcule o "resto" (a diferença) usando fmod()
+                // Esta função é o "operador %" para floats
+                $diferenca = fmod($salario_float, $salminimo);
 
                 // Formata os valores para exibição
-                $salario_formatado = numfmt_format_currency($padrao, $salario, "BRL");
+                // Use a $salario_float aqui para garantir a formatação correta
+                $salario_formatado = numfmt_format_currency($padrao, $salario_float, "BRL");
                 $diferenca_formatada = numfmt_format_currency($padrao, $diferenca, "BRL");
 
-                echo "<p>Quem recebe um salário de $salario_formatado ganha <strong>$total salário(s) mínimo(s)</strong> + $diferenca_formatada.</p>";
+                echo "<h2>Resultado final:</h2>
+              <p>Quem recebe um salário de $salario_formatado ganha <strong>$total salário(s) mínimo(s)</strong> + $diferenca_formatada.</p>";
             }
             ?>
         </section>
