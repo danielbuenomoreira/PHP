@@ -85,10 +85,10 @@
                 <input type="submit" name="calc_sal" value="Calcular">
                 <p>O valor do salário mínimo em 2025 é de <strong><?= numfmt_format_currency($padrao, $salminimo, "BRL") ?></strong>, válido a partir de 1º de janeiro de 2025, conforme Decreto nº 12.342, de 30 de dezembro de 2024. Esse valor representa um aumento de R$ 106 em relação a 2024, totalizando um reajuste de 7,5%. </p>
             </form>
-        </article>
-        <section>
+
             <?php
             if (isset($_GET['calc_sal'])) {
+                echo "<section>";
                 // 1. Converta o salário (que vem como string) para float
                 $salario_float = (float)$salario;
 
@@ -106,10 +106,12 @@
                 $diferenca_formatada = numfmt_format_currency($padrao, $diferenca, "BRL");
 
                 echo "<h2>Resultado final:</h2>
-              <p>Quem recebe um salário de $salario_formatado ganha <strong>$total salário(s) mínimo(s)</strong> + $diferenca_formatada.</p>";
+                <p>Quem recebe um salário de $salario_formatado ganha <strong>$total salário(s) mínimo(s)</strong> + $diferenca_formatada.</p>";
+                echo "</section>";
             }
             ?>
-        </section>
+        </article>
+
     </main>
 </body>
 

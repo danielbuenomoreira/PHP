@@ -43,37 +43,40 @@
         </form>
         <span id="divisor-erro" style="color: red; display: block; margin-top: 5px;"></span>
     </article>
-    <section>
-        <h2>Estrutura da Divisão</h2>
 
-        <?php
-        // --- LÓGICA DO CÁLCULO E EXIBIÇÃO ---
-        // Verifica se o formulário já foi enviado uma vez
-        if (isset($_GET['d1']) && isset($_GET['d2'])) {
-            
-            // VALIDAÇÃO SERVER-SIDE (ESSENCIAL)
-            if ($divisor == 0) {
-                echo "<p style='color: red;'><strong>ERRO: Divisor não pode ser zero. Impossível calcular.</strong></p>";
-            } else {
-                // Se tudo estiver ok, faz o cálculo
-                $quociente = intdiv($dividendo, $divisor); // Divisão inteira
-                $resto = $dividendo % $divisor; // Módulo (resto da divisão)
 
-                // Exibe a tabela com o resultado
-                echo "<table class='divisao'>";
-                echo "<tr>";
-                echo "    <td>$dividendo</td>";
-                echo "    <td>$divisor</td>";
-                echo "</tr>";
-                echo "<tr>";
-                echo "    <td>$resto</td>";
-                echo "    <td>$quociente</td>";
-                echo "</tr>";
-                echo "</table>";
-            }
+    <?php
+    // --- LÓGICA DO CÁLCULO E EXIBIÇÃO ---
+    // Verifica se o formulário já foi enviado uma vez
+    if (isset($_GET['d1']) && isset($_GET['d2'])) {
+
+        // VALIDAÇÃO SERVER-SIDE (ESSENCIAL)
+        if ($divisor == 0) {
+            echo "<p style='color: red;'><strong>ERRO: Divisor não pode ser zero. Impossível calcular.</strong></p>";
+        } else {
+            // Se tudo estiver ok, faz o cálculo
+            $quociente = intdiv($dividendo, $divisor); // Divisão inteira
+            $resto = $dividendo % $divisor; // Módulo (resto da divisão)
+
+            // Exibe a tabela com o resultado
+            echo <<<HTML
+                <section>
+                    <h1>Estrutura da Divisão:</h1>
+                    <table class='divisao'>
+                        <tr>
+                            <td>$dividendo</td>
+                            <td>$divisor</td>
+                        </tr>
+                        <tr>
+                            <td>$resto</td>
+                            <td>$quociente</td>
+                        </tr>
+                    </table>
+                </section>
+                HTML;
         }
-        ?>
-    </section>
+    }
+    ?>
     <script src="script.js"></script>
 </body>
 
