@@ -173,6 +173,10 @@ ul {
         padding-left: 0;       /* Remove o recuo padrão da lista */
 }
 
+li {
+    margin-bottom: 10px;
+}
+
 /* ELEMENTOS DE FORMULÁRIO */
 
 form {

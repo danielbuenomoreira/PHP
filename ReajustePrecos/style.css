@@ -23,7 +23,7 @@ body {
 }
 
 header, main, section, article {
-    max-width: 1000px;
+    max-width: 700px;
 }
 
 header > h1 {
@@ -148,9 +148,20 @@ form label {
     border-radius: 5px;
 }
 
-input[type=text], [type=number], select, input[type=date], input[type=date], input[type=datetime], input[type=email], input[type=month], input[type=password], input[type=range], input[type=tel], input[type=time], input[type=week] {
+input[type=text], [type=number], select, input[type=date], input[type=date], input[type=datetime], input[type=email], input[type=month], input[type=password], input[type=tel], input[type=time], input[type=week] {
     width: 100%;
     padding: 12px 20px;
+    font-size: 1em;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=range]{
+    width: 100%;
+    padding: 0px;
     font-size: 1em;
     margin: 8px 0;
     display: inline-block;
