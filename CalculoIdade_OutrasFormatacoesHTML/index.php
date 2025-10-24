@@ -10,32 +10,47 @@
 
 <body>
     <?php
-        $atual = date("Y");
-        $nasc = $_GET['nasc'] ?? '1992';
-        $ano = $_GET['ano'] ?? $atual;
+    $atual = date("Y");
+    $nasc = $_GET['nasc'] ?? '1992';
+    $ano = $_GET['ano'] ?? $atual;
     ?>
     <main>
         <article>
             <h1>Calculando a sua Idade</h1>
             <form action="<?= $_SERVER['PHP_SELF'] ?>" method="get">
                 <label for="nasc">Em que ano você nasceu?</label>
-                <input type="number" name="nasc" id="nasc" min="1500" value="<?=$nasc?>">
-                <label for="ano">Quer saber sua idade em que ano? (atualmente estamos em <strong><?=$atual?></strong>)</label>
-                <input type="number" name="ano" id="ano" min="1900" value="<?=$ano?>">
+                <input type="number" name="nasc" id="nasc" min="1500" max="<?= $atual ?>" value="<?= $nasc ?>">
+                <label for="ano">Quer saber sua idade em que ano? (atualmente estamos em <strong><?= $atual ?></strong>)</label>
+                <input type="number" name="ano" id="ano" min="1900" value="<?= $ano ?>">
                 <input type="submit" name="calcular_idade" value="Qual será minha idade?">
             </form>
             <?php
-            // VERIFICAÇÃO: Este bloco só aparece se o formulário de soma for enviado
+            // VERIFICAÇÃO: Este bloco só aparece se o formulário for enviado
             if (isset($_GET['calcular_idade'])) {
-                //$ma = ($valor1 + $valor2) / 2;
-                //$mp = ($valor1 * $peso1 + $valor2 * $peso2) / ($peso1 + $peso2);
 
-                echo <<<HTML
-                <section>
-                    <h2>Resultado:</h2>
-                    <p>Quem nasceu em {} vai ter <strong>{}</strong> anos em {}!</p>
-                </section>
-                HTML;
+                // Verificamos se o ano do cálculo ($ano) é menor que o ano de nascimento ($nasc)
+                if ($ano < $nasc) {
+
+                    echo <<<HTML
+                    <section>
+                        <h2>Resultado:</h2>
+                        <p style='color: red;'><strong>
+                            IMPOSSÍVEL CALCULAR!</strong> O ano final (<strong>$ano</strong>) não pode ser anterior ao seu ano de nascimento (<strong>$nasc</strong>).
+                        </p>
+                    </section>
+                    HTML;
+                } else {
+
+                    // Se a validação passar (o ano for válido), executamos o cálculo
+                    $idade = $ano - $nasc;
+
+                    echo <<<HTML
+                    <section>
+                        <h2>Resultado:</h2>
+                        <p>Quem nasceu em $nasc, completa <strong>$idade</strong> ano(s) no ano de $ano!</p>
+                    </section>
+                    HTML;
+                }
             }
             ?>
         </article>

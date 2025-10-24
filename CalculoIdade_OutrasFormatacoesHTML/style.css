@@ -23,7 +23,7 @@ body {
 }
 
 header, main, section, article {
-    max-width: 700px;
+    max-width: 1000px;
 }
 
 header > h1 {
@@ -141,7 +141,6 @@ form label {
     display: block;
     width: fit-content;
     font-size: 0.8em;
-    font-weight: 100;
     background-color: rgba(55, 41, 145, 0.2);
     padding: 3px 7px;
     margin-top: 10px;
