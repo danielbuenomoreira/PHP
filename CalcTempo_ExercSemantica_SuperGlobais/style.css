@@ -9,7 +9,6 @@
 
 body {
     background-color: #020116;
-    color: white;
     background-image: linear-gradient(180deg, #1f1658, #000000);
     background-repeat: no-repeat;
     background-position: center center;
@@ -33,12 +32,7 @@ pre {
 }
 
 header, main, section, article {
-    max-width: 700px;
-}
-
-header > h1 {
-    color: white;
-    text-shadow: 3px 3px 0px black;
+    max-width: 1000px;
 }
 
 main, section, article {
@@ -73,9 +67,9 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #d6d8fa;
-    margin: 0 0 10px 0;
-    text-shadow: 3px 3px 0px black;
+    color: #372991;
+    margin: 0 0 10px 0; 
+    text-shadow: 1px 1px 0px black;
 }
 
 a {
