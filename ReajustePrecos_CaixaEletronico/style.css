@@ -22,16 +22,21 @@ body {
     align-items: center;
 }
 
-header, main, section, article {
-    max-width: 700px;
+header,
+main,
+section,
+article {
+    max-width: 1000px;
 }
 
-header > h1 {
+header>h1 {
     color: white;
     text-shadow: 3px 3px 0px black;
 }
 
-main, section, article {
+main,
+section,
+article {
     background-color: white;
     padding: 15px;
     margin-bottom: 20px;
@@ -54,7 +59,9 @@ p {
     line-height: 1.5em;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
     color: #372991;
     margin: 0 0 10px 0;
 }
@@ -112,7 +119,7 @@ table.divisao td {
     font-size: 2.5em;
 }
 
-table.divisao  tr:nth-child(1) td:nth-child(2) {
+table.divisao tr:nth-child(1) td:nth-child(2) {
     border-bottom: 3px solid black;
     border-left: 3px solid black;
 }
@@ -125,8 +132,16 @@ table.divisao tr:nth-child(2) td:nth-child(1) {
     text-decoration: underline;
 }
 
-ul > li::marker {
+ul>li::marker {
     color: #372991;
+}
+
+li {
+    margin: 10px 0;
+}
+
+ul li img {
+    vertical-align: middle;
 }
 
 /* ELEMENTOS DE FORMULÁRIO */
@@ -141,6 +156,7 @@ form label {
     display: block;
     width: fit-content;
     font-size: 0.8em;
+    font-weight: 100;
     background-color: rgba(55, 41, 145, 0.2);
     padding: 3px 7px;
     margin-top: 10px;
@@ -148,7 +164,18 @@ form label {
     border-radius: 5px;
 }
 
-input[type=text], [type=number], select, input[type=date], input[type=date], input[type=datetime], input[type=email], input[type=month], input[type=password], input[type=tel], input[type=time], input[type=week] {
+input[type=text],
+[type=number],
+select,
+input[type=date],
+input[type=date],
+input[type=datetime],
+input[type=email],
+input[type=month],
+input[type=password],
+input[type=tel],
+input[type=time],
+input[type=week] {
     width: 100%;
     padding: 12px 20px;
     font-size: 1em;
@@ -159,7 +186,7 @@ input[type=text], [type=number], select, input[type=date], input[type=date], inp
     box-sizing: border-box;
 }
 
-input[type=range]{
+input[type=range] {
     width: 100%;
     padding: 0px;
     font-size: 1em;
@@ -169,7 +196,7 @@ input[type=range]{
     border-radius: 4px;
     box-sizing: border-box;
 }
-  
+
 input[type=submit] {
     width: 100%;
     background-color: #4CAF50;
@@ -181,7 +208,7 @@ input[type=submit] {
     border-radius: 4px;
     cursor: pointer;
 }
-  
+
 input[type=submit]:hover {
     background-color: #45a049;
 }
@@ -202,7 +229,8 @@ input[type=reset]:hover {
     background-color: #c27013;
 }
 
-input[type=button], button {
+input[type=button],
+button {
     width: 100%;
     background-color: #372991;
     font-size: 1em;
@@ -214,7 +242,8 @@ input[type=button], button {
     cursor: pointer;
 }
 
-input[type=button]:hover, button:hover {
+input[type=button]:hover,
+button:hover {
     background-color: #291f6c;
 }
 
@@ -222,7 +251,7 @@ fieldset {
     border: 0.5px dotted #372991;
 }
 
-fieldset > legend {
+fieldset>legend {
     font-size: 0.8em;
     font-weight: 100;
     background-color: rgba(55, 41, 145, 0.2);
@@ -230,9 +259,17 @@ fieldset > legend {
     border-radius: 5px;
 }
 
-input[type=radio] + label, input[type=checkbox] + label {
+input[type=radio]+label,
+input[type=checkbox]+label {
     display: inline-block;
     font-size: 1em;
     background-color: rgba(0, 0, 0, 0);
 }
 
+.nota img {
+    width: 150px;
+}
+
+.nota img.real {
+    width: 90px;
+}
