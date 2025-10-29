@@ -1,8 +1,11 @@
 <?php
+/*
+ * Ficheiro de Conexão com o BANCO LOCAL (WAMP)
+ */
 
-$servidor = "localhost:3306";    // O servidor onde o MySQL está
-$usuario_db = "root";       // O nome de utilizador do MySQL
-$senha_db = "";             // A senha do MySQL
+$servidor = "localhost";    
+$usuario_db = "root";       // O seu nome de utilizador do MySQL
+$senha_db = "";             // A sua senha do MySQL (em branco por padrão no WAMP)
 $banco = "lista_tarefas_db"; // O nome do banco de dados
 
 // Criar a conexão
