@@ -23,6 +23,6 @@ Neste projeto, implementei vários exemplos práticos, como:
 
 A versão funcional, com todos os cálculos e interações com a API, está hospedada em um servidor PHP. Acesse pelo link abaixo:
 
-➡️ **[https://danielmoreira.kesug.com/](https://danielmoreira.kesug.com/)**
+➡️ **[https://danielmoreira.infinityfree.me](https://danielmoreira.infinityfree.me)**
 
 A pré-visualização estática no GitHub Pages **[https://danielbuenomoreira.github.io/PHP/](https://danielbuenomoreira.github.io/PHP/)** **não** executará o código PHP.
