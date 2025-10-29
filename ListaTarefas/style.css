@@ -1,3 +1,4 @@
+/* Estilos base */
 * {
     margin: 0;
     padding: 0;
@@ -6,16 +7,19 @@
 }
 
 body {
-    padding: 20px 0px;
+    padding: 40px 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Alinha ao topo */
+    background: #f1f5f9; /* Um fundo leve para contrastar */
+    min-height: 100vh;
 }
 
 main {
     background: #1e293b;
     padding: 30px;
-    width: 360px;
+    width: 90%; /* Ocupa 90% da tela */
+    max-width: 800px; /* Limite de 800px de largura */
     border-radius: 16px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
     transition: 0.3s;
@@ -32,16 +36,19 @@ h2 {
     letter-spacing: 1px;
 }
 
-article {
+/* Estilo para AMBOS os formulários (login e adicionar tarefa) */
+.form-login,
+.form-tarefa {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #334155;
     border-radius: 10px;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
-input {
+input[type="text"] {
     flex: 1;
     background: transparent;
     border: none;
@@ -51,7 +58,7 @@ input {
     font-size: 15px;
 }
 
-button {
+button[type="submit"] {
     background: #3b82f6;
     border: none;
     color: #fff;
@@ -61,15 +68,18 @@ button {
     transition: 0.3s;
 }
 
-button:hover {
+button[type="submit"]:hover {
     background: #2563eb;
 }
 
 ul {
     margin-top: 20px;
     list-style: none;
-    max-height: 250px;
+    max-height: 400px;
     overflow-y: auto;
+    /* Estilo da barra de scroll */
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #334155;
 }
 
 li {
@@ -85,25 +95,59 @@ li {
     animation: fadeIn 0.3s ease-in-out;
 }
 
+/* Estilo para a tarefa concluída */
 li.done {
-    text-decoration: line-through;
     opacity: 0.6;
-    transform: scale(0.98);
+}
+li.done .link-tarefa {
+    text-decoration: line-through;
 }
 
-span {
+/* Estilo para a mensagem "Nenhuma tarefa" */
+li.info {
+    background: #334155;
+    justify-content: center;
+    color: #94a3b8;
+}
+
+/* O link do texto da tarefa */
+.link-tarefa {
+    color: #fff;
+    text-decoration: none;
+    flex: 1; /* Ocupa o espaço disponível */
+    cursor: pointer;
+}
+
+/* O 'X' para remover */
+.link-remover {
     color: #f87171;
     cursor: pointer;
     font-weight: bold;
     font-size: 18px;
+    padding-left: 15px;
+    text-decoration: none;
 }
 
+/* O link para "Sair" / "Trocar de utilizador" */
+.link-sair {
+    display: block; /* Ocupa a linha toda */
+    text-align: center;
+    margin-top: 25px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+}
+.link-sair:hover {
+    color: #fff;
+}
+
+
+/* Animação */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
