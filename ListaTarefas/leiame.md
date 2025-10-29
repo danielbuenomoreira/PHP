@@ -1,5 +1,5 @@
 Digite isso no seu banco de dados.
-Meu caso foi o Wampp e o InfinityFree (no Infinity Tree, tem que criar separado e apagar as 5 primeiras linhas):
+Meu caso foi o Wampp e o InfinityFree (no InfinityFree, tem que criar separado e apagar as 5 primeiras linhas):
 
 -- Cria a base de dados (opcional, pode usar uma existente)
 CREATE DATABASE IF NOT EXISTS lista_tarefas_db;
