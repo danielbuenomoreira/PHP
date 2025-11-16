@@ -1,6 +1,6 @@
 # 🚀 Meu Playground em PHP
 
-Bem-vindo ao meu repositório de estudos em PHP! Este projeto é um espaço onde aplico e testo diferentes funcionalidades da linguagem, desde o básico até integrações com APIs.
+Bem-vindo ao meu repositório de estudos em PHP! Este projeto é um espaço onde aplico e testo diferentes funcionalidades da linguagem, desde o básico até integrações com APIs e Banco de Dados.
 
 Sinta-se à vontade para explorar o código!
 
@@ -10,12 +10,13 @@ Sinta-se à vontade para explorar o código!
 
 Neste projeto, implementei vários exemplos práticos, como:
 
--   Formulários interativos com manipulação de dados via `GET`.
+-   Formulários interativos com manipulação de dados via `GET`, `POST`, etc..
+-   Banco de dados.
 -   Demonstração de diversas funções aritméticas do PHP (`abs`, `round`, `sqrt`, etc.).
--   Calculadora de salários mínimos.
+-   Cálculos.
 -   Integração com a API do Banco Central do Brasil para cotação do dólar em tempo real.
 -   Manipulação de datas e horas com `date()`.
--   Um "Easter Egg" divertido usando JavaScript para interagir com áudio.
+-   Um "Easter Egg" divertido usando JavaScript para interagir com áudio, e outras coisas de JavaScript.
 
 ---
 
