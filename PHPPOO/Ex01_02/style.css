@@ -1,0 +1,50 @@
+/* --- Estilos Gerais --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 20px;
+}
+
+/* --- Estilização do Bloco <pre> ---
+   Esta tag é ótima para depuração (como o print_r), 
+   pois preserva os espaços em branco e quebras de linha.
+*/
+pre {
+    background-color: #ffffff;
+    border: 1px solid #dce1e6;
+    border-radius: 8px;
+    /* Espaçamento interno */
+    padding: 1.5em;
+    /* Sombra suave para dar profundidade */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    
+    /* Fonte monoespaçada, ideal para código e print_r */
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+    /* Estas duas linhas são importantes:
+       Elas garantem que linhas muito longas (do print_r, por ex.) 
+       não causem barra de rolagem horizontal e quebrem a linha.
+    */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* --- Estilização dos parágrafos <p> dentro do <pre> --- */
+pre p {
+    font-family: Arial, sans-serif;
+    color: #1a5c9a; 
+    
+    /* Adiciona uma linha pontilhada acima da mensagem */
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin: 20px 0;
+}
