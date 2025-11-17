@@ -1,0 +1,77 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 20px;
+}
+
+pre {
+    background-color: #ffffff;
+    border: 1px solid #dce1e6;
+    border-radius: 8px;
+    padding: 1.5em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+pre p {
+    font-family: Arial, sans-serif;
+    color: #1a5c9a;
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ccc;
+    margin: 20px 0;
+}
+
+/* --- ADIÇÕES PARA O LAYOUT DE COLUNAS --- */
+
+.container {
+    display: flex; /* ativa o layout flexível */
+    flex-wrap: wrap; /* Permite que as colunas quebrem em telas pequenas */
+    gap: 20px; 
+}
+
+.coluna {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.coluna pre {
+    flex-grow: 1;
+}
+
+/* --- Estilo para o Bloco de Detalhes do Livro --- */
+
+.detalhes-livro {
+    /* Tira a fonte monoespaçada do <pre> */
+    font-family: Arial, sans-serif;
+    color: #333; /* Cor padrão do texto */
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    
+    /* Destaque na borda */
+    border-left: 5px solid #007bff; 
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.detalhes-livro p {
+    font-family: Arial, sans-serif;
+    color: #333;
+    border-top: none; /* Remove a linha tracejada */
+    padding-top: 0; /* Remove o padding */
+    margin: 0;
+}
