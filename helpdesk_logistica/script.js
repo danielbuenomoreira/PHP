@@ -46,7 +46,7 @@ function aplicarOperador(operador) {
 
     const isAdmin = document.body.dataset.isAdmin === 'true';
 
-    // Atualizado para incluir os botões de edição (.form-editar-comentario)
+    // Responsável por exibir os botões de edição, exclusão e anexos
     document.querySelectorAll('.form-excluir-chamado, .form-excluir-anexo, .form-editar-comentario').forEach(elemento => {
         const autor = elemento.getAttribute('data-autor');
         elemento.style.display = (isAdmin || autor === operador) ? 'inline-block' : 'none';
@@ -61,7 +61,6 @@ function abrirAba(status) {
     event.currentTarget.classList.add('active');
 }
 
-// Funções para controle do formulário de edição
 function mostrarFormEdicao(id) {
     document.getElementById('texto-comentario-' + id).style.display = 'none';
     document.getElementById('form-edicao-' + id).style.display = 'block';

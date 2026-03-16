@@ -107,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $comentario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($comentario && ($is_admin || $comentario['autor'] === $operador)) {
-            // Atualiza o texto e regista a data exata da modificação
             $stmt = $pdo->prepare("UPDATE comentarios SET texto = ?, data_modificacao = CURRENT_TIMESTAMP WHERE id = ?");
             $stmt->execute([$novo_texto, $comentario_id]);
         }
@@ -197,7 +196,7 @@ foreach ($anexos_raw as $a) {
             const limite = 50 * 1024 * 1024;
             for (let i = 0; i < input.files.length; i++) {
                 if (input.files[i].size > limite) {
-                    alert('ERRO: O arquivo "' + input.files[i].name + '" excede o limite estrito de 50MB.\n\nA seleção de arquivos foi cancelada.');
+                    alert('ERRO: O arquivo "' + input.files[i].name + '" excede o limite estrito de 50MB. A seleção de arquivos foi cancelada.');
                     input.value = '';
                     break;
                 }
@@ -218,7 +217,7 @@ foreach ($anexos_raw as $a) {
     <div id="modal_senha" class="modal-overlay">
         <div class="modal-box">
             <h3>Autenticação de Admin</h3>
-            <p>Digite a senha para habilitar a exclusão global ou cancele para acesso padrão.</p>
+            <p>Digite a senha para habilitar privilégios globais ou cancele para acesso padrão.</p>
             <input type="password" id="senha_modal_input" placeholder="Sua senha secreta..." style="margin-bottom: 15px; text-align: center;">
             <div style="display: flex; gap: 10px;">
                 <button onclick="confirmarSenha()" style="flex: 1;">Acessar</button>
@@ -274,7 +273,7 @@ foreach ($anexos_raw as $a) {
                 <label>Descrição:</label>
                 <textarea name="descricao" rows="3" required></textarea>
 
-                <label>Anexos (Máx 50MB por ficheiro):</label>
+                <label>Anexos (Máx 50MB por arquivo):</label>
                 <input type="file" name="anexos[]" multiple onchange="validarTamanhoArquivos(this)">
 
                 <button type="submit">Cadastrar Tarefa</button>
@@ -303,10 +302,10 @@ foreach ($anexos_raw as $a) {
                     <div class="card">
                         <h3>
                             #<?= $c['id'] ?> - <?= htmlspecialchars($c['titulo']) ?>
-                            <form method="POST" class="form-excluir-chamado" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Tem certeza que deseja eliminar completamente este chamado e todos os seus ficheiros?');">
+                            <form method="POST" class="form-excluir-chamado" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Tem certeza que deseja excluir completamente este chamado e todos os seus arquivos?');">
                                 <input type="hidden" name="acao" value="deletar_chamado">
                                 <input type="hidden" name="chamado_id" value="<?= $c['id'] ?>">
-                                <button type="submit" class="btn-danger">Eliminar Chamado</button>
+                                <input type="hidden" name="operador_atual" class="input-operador"> <button type="submit" class="btn-danger">Excluir Chamado</button>
                             </form>
                         </h3>
                         <div class="meta">Aberto por: <?= htmlspecialchars($c['autor']) ?> em <?= date('d/m/Y H:i', strtotime($c['data_criacao'])) ?></div>
@@ -322,10 +321,10 @@ foreach ($anexos_raw as $a) {
                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" target="_blank">👁 Visualizar</a>
                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" download="<?= htmlspecialchars($anexo['nome_original']) ?>">⬇ Baixar</a>
 
-                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Eliminar permanentemente este ficheiro?');">
+                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Excluir permanentemente este arquivo?');">
                                             <input type="hidden" name="acao" value="deletar_anexo">
                                             <input type="hidden" name="anexo_id" value="<?= $anexo['id'] ?>">
-                                            <button type="submit" class="btn-link-danger">❌</button>
+                                            <input type="hidden" name="operador_atual" class="input-operador"> <button type="submit" class="btn-link-danger">❌</button>
                                         </form>
                                     </div>
                                 <?php endforeach; ?>
@@ -372,10 +371,10 @@ foreach ($anexos_raw as $a) {
                                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" target="_blank">👁 Visualizar</a>
                                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" download="<?= htmlspecialchars($anexo['nome_original']) ?>">⬇ Baixar</a>
 
-                                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($com['autor']) ?>" style="display:none;" onsubmit="return confirm('Eliminar permanentemente este ficheiro?');">
+                                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($com['autor']) ?>" style="display:none;" onsubmit="return confirm('Excluir permanentemente este arquivo?');">
                                                             <input type="hidden" name="acao" value="deletar_anexo">
                                                             <input type="hidden" name="anexo_id" value="<?= $anexo['id'] ?>">
-                                                            <button type="submit" class="btn-link-danger">❌</button>
+                                                            <input type="hidden" name="operador_atual" class="input-operador"> <button type="submit" class="btn-link-danger">❌</button>
                                                         </form>
                                                     </div>
                                                 <?php endforeach; ?>
@@ -394,7 +393,7 @@ foreach ($anexos_raw as $a) {
 
                                 <textarea name="texto" rows="2" placeholder="Digite o seu comentário ou cole um link aqui..." required></textarea>
 
-                                <label style="display:block; margin-top:5px; font-size: 0.9em;">Anexar ficheiros (Máx 50MB):</label>
+                                <label style="display:block; margin-top:5px; font-size: 0.9em;">Anexar arquivos (Máx 50MB):</label>
                                 <input type="file" name="anexos[]" multiple onchange="validarTamanhoArquivos(this)">
 
                                 <div style="margin-top: 10px; display: flex; align-items: center; gap: 15px;">
