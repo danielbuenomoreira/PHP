@@ -236,3 +236,27 @@ button:hover {
     vertical-align: middle;
     margin-left: 10px;
 }
+
+.btn-link-edit {
+    background: none;
+    border: none;
+    color: #ffc107;
+    padding: 0;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 0.9em;
+    display: inline;
+    width: auto;
+}
+
+.btn-link-edit:hover {
+    text-decoration: underline;
+    color: #e0a800;
+}
+
+.editado-badge {
+    font-size: 0.85em;
+    color: #888;
+    font-style: italic;
+    margin-left: 10px;
+}

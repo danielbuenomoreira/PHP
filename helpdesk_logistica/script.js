@@ -4,16 +4,14 @@ function atualizarOperador() {
     const operador = document.getElementById('operador').value;
     const isAdmin = document.body.dataset.isAdmin === 'true';
 
-    // Dispara o modal de senha se for Daniel e não estiver autenticado
     if (operador === 'Daniel Moreira' && !isAdmin) {
         operadorPendente = operador;
         document.getElementById('modal_senha').style.display = 'flex';
         document.getElementById('senha_modal_input').value = '';
         document.getElementById('senha_modal_input').focus();
-
-        // Reverte visualmente o select até a confirmação ou cancelamento
+        
         document.getElementById('operador').value = localStorage.getItem('operadorHelpDesk') || '';
-        return;
+        return; 
     }
 
     prosseguirAtualizacaoOperador(operador);
@@ -34,12 +32,10 @@ function confirmarSenha() {
 
 function cancelarSenha() {
     document.getElementById('modal_senha').style.display = 'none';
-    // Se cancelar, prossegue como Daniel Moreira, mas sem privilégios de Admin
     prosseguirAtualizacaoOperador(operadorPendente);
 }
 
-// Permite confirmar a senha apertando "Enter"
-document.getElementById('senha_modal_input')?.addEventListener('keypress', function (e) {
+document.getElementById('senha_modal_input')?.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') confirmarSenha();
 });
 
@@ -50,9 +46,10 @@ function aplicarOperador(operador) {
 
     const isAdmin = document.body.dataset.isAdmin === 'true';
 
-    document.querySelectorAll('.form-excluir-chamado, .form-excluir-anexo').forEach(form => {
-        const autor = form.getAttribute('data-autor');
-        form.style.display = (isAdmin || autor === operador) ? 'inline-block' : 'none';
+    // Atualizado para incluir os botões de edição (.form-editar-comentario)
+    document.querySelectorAll('.form-excluir-chamado, .form-excluir-anexo, .form-editar-comentario').forEach(elemento => {
+        const autor = elemento.getAttribute('data-autor');
+        elemento.style.display = (isAdmin || autor === operador) ? 'inline-block' : 'none';
     });
 }
 
@@ -64,10 +61,21 @@ function abrirAba(status) {
     event.currentTarget.classList.add('active');
 }
 
+// Funções para controle do formulário de edição
+function mostrarFormEdicao(id) {
+    document.getElementById('texto-comentario-' + id).style.display = 'none';
+    document.getElementById('form-edicao-' + id).style.display = 'block';
+}
+
+function esconderFormEdicao(id) {
+    document.getElementById('texto-comentario-' + id).style.display = 'block';
+    document.getElementById('form-edicao-' + id).style.display = 'none';
+}
+
 window.onload = function () {
     const operadorSessao = document.body.dataset.operadorSessao;
     const salvo = operadorSessao || localStorage.getItem('operadorHelpDesk');
-
+    
     if (salvo) {
         document.getElementById('operador').value = salvo;
         localStorage.setItem('operadorHelpDesk', salvo);

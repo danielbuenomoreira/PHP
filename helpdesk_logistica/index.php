@@ -9,6 +9,16 @@ if (!is_dir($diretorio_uploads)) {
     mkdir($diretorio_uploads, 0777, true);
 }
 
+function exibirTextoFormatado($texto)
+{
+    $texto_seguro = htmlspecialchars($texto, ENT_QUOTES, 'UTF-8');
+    $padrao_http = '/(https?:\/\/[a-zA-Z0-9\-\.\/\?\&\=\+\~\_\%\#]+)/';
+    $texto_linkado = preg_replace($padrao_http, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #0056b3; text-decoration: underline;">$1</a>', $texto_seguro);
+    $padrao_www = '/(?<!\/\/)(www\.[a-zA-Z0-9\-\.\/\?\&\=\+\~\_\%\#]+)/';
+    $texto_linkado = preg_replace($padrao_www, '<a href="http://$1" target="_blank" rel="noopener noreferrer" style="color: #0056b3; text-decoration: underline;">$1</a>', $texto_linkado);
+    return nl2br($texto_linkado);
+}
+
 function processarAnexos($pdo, $chamado_id, $comentario_id, $arquivos)
 {
     global $diretorio_uploads;
@@ -88,6 +98,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
 
+    if ($acao === 'editar_comentario') {
+        $comentario_id = $_POST['comentario_id'];
+        $novo_texto = $_POST['novo_texto'];
+
+        $stmt = $pdo->prepare("SELECT autor FROM comentarios WHERE id = ?");
+        $stmt->execute([$comentario_id]);
+        $comentario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($comentario && ($is_admin || $comentario['autor'] === $operador)) {
+            // Atualiza o texto e regista a data exata da modificação
+            $stmt = $pdo->prepare("UPDATE comentarios SET texto = ?, data_modificacao = CURRENT_TIMESTAMP WHERE id = ?");
+            $stmt->execute([$novo_texto, $comentario_id]);
+        }
+        header("Location: index.php");
+        exit;
+    }
+
     if ($acao === 'deletar_chamado') {
         $chamado_id = $_POST['chamado_id'];
         $stmt = $pdo->prepare("SELECT autor FROM chamados WHERE id = ?");
@@ -130,10 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Lógica de Busca Atualizada
 $busca = $_GET['busca'] ?? '';
 if ($busca !== '') {
-    // Adicionada a busca exata pelo ID do chamado
     $stmt = $pdo->prepare("SELECT * FROM chamados WHERE id = ? OR titulo LIKE ? OR autor LIKE ? ORDER BY data_criacao DESC");
     $termo_busca = '%' . $busca . '%';
     $stmt->execute([$busca, $termo_busca, $termo_busca]);
@@ -167,6 +192,18 @@ foreach ($anexos_raw as $a) {
     <meta charset="UTF-8">
     <title>Help Desk - Logística e Transportes</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        function validarTamanhoArquivos(input) {
+            const limite = 50 * 1024 * 1024;
+            for (let i = 0; i < input.files.length; i++) {
+                if (input.files[i].size > limite) {
+                    alert('ERRO: O arquivo "' + input.files[i].name + '" excede o limite estrito de 50MB.\n\nA seleção de arquivos foi cancelada.');
+                    input.value = '';
+                    break;
+                }
+            }
+        }
+    </script>
 </head>
 
 <body data-is-admin="<?= isset($_SESSION['is_admin']) && $_SESSION['is_admin'] ? 'true' : 'false' ?>"
@@ -210,7 +247,6 @@ foreach ($anexos_raw as $a) {
                     <option value="Daniel Moreira">Daniel Moreira</option>
                     <option value="Edgar Abitante">Edgar Abitante</option>
                     <option value="Nathan Toledo">Nathan Toledo</option>
-                    <option value="Ricardo Vuaden">Ricardo Vuaden</option>
                     <option value="Rosberguer Camargo">Rosberguer Camargo</option>
                     <option value="Valesca Reichelt">Valesca Reichelt</option>
                     <option value="William Albeche">William Albeche</option>
@@ -238,8 +274,8 @@ foreach ($anexos_raw as $a) {
                 <label>Descrição:</label>
                 <textarea name="descricao" rows="3" required></textarea>
 
-                <label>Anexos (Máx 50MB por arquivo):</label>
-                <input type="file" name="anexos[]" multiple>
+                <label>Anexos (Máx 50MB por ficheiro):</label>
+                <input type="file" name="anexos[]" multiple onchange="validarTamanhoArquivos(this)">
 
                 <button type="submit">Cadastrar Tarefa</button>
             </form>
@@ -267,14 +303,15 @@ foreach ($anexos_raw as $a) {
                     <div class="card">
                         <h3>
                             #<?= $c['id'] ?> - <?= htmlspecialchars($c['titulo']) ?>
-                            <form method="POST" class="form-excluir-chamado" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Tem certeza que deseja excluir completamente este chamado e todos os seus arquivos?');">
+                            <form method="POST" class="form-excluir-chamado" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Tem certeza que deseja eliminar completamente este chamado e todos os seus ficheiros?');">
                                 <input type="hidden" name="acao" value="deletar_chamado">
                                 <input type="hidden" name="chamado_id" value="<?= $c['id'] ?>">
-                                <button type="submit" class="btn-danger">Excluir Chamado</button>
+                                <button type="submit" class="btn-danger">Eliminar Chamado</button>
                             </form>
                         </h3>
                         <div class="meta">Aberto por: <?= htmlspecialchars($c['autor']) ?> em <?= date('d/m/Y H:i', strtotime($c['data_criacao'])) ?></div>
-                        <p><?= nl2br(htmlspecialchars($c['descricao'])) ?></p>
+
+                        <p><?= exibirTextoFormatado($c['descricao']) ?></p>
 
                         <?php if (isset($anexos['chamado'][$c['id']])): ?>
                             <div class="anexos-list">
@@ -285,7 +322,7 @@ foreach ($anexos_raw as $a) {
                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" target="_blank">👁 Visualizar</a>
                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" download="<?= htmlspecialchars($anexo['nome_original']) ?>">⬇ Baixar</a>
 
-                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Excluir permanentemente este arquivo?');">
+                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($c['autor']) ?>" style="display:none;" onsubmit="return confirm('Eliminar permanentemente este ficheiro?');">
                                             <input type="hidden" name="acao" value="deletar_anexo">
                                             <input type="hidden" name="anexo_id" value="<?= $anexo['id'] ?>">
                                             <button type="submit" class="btn-link-danger">❌</button>
@@ -302,9 +339,30 @@ foreach ($anexos_raw as $a) {
                                         <div class="meta">
                                             <strong><?= htmlspecialchars($com['autor']) ?></strong>
                                             <?= date('d/m/Y H:i', strtotime($com['data_criacao'])) ?>
+
+                                            <?php if (!empty($com['data_modificacao'])): ?>
+                                                <span class="editado-badge">(Editado em <?= date('d/m/Y H:i', strtotime($com['data_modificacao'])) ?>)</span>
+                                            <?php endif; ?>
+
                                             <?= $com['is_solucao'] ? '<span class="solucao-badge"> [SOLUÇÃO]</span>' : '' ?>
+
+                                            <button type="button" class="btn-link-edit form-editar-comentario" data-autor="<?= htmlspecialchars($com['autor']) ?>" style="display:none;" onclick="mostrarFormEdicao(<?= $com['id'] ?>)">✏️ Editar</button>
                                         </div>
-                                        <?= nl2br(htmlspecialchars($com['texto'])) ?>
+
+                                        <div id="texto-comentario-<?= $com['id'] ?>">
+                                            <?= exibirTextoFormatado($com['texto']) ?>
+                                        </div>
+
+                                        <form method="POST" id="form-edicao-<?= $com['id'] ?>" style="display:none; margin-top: 10px;">
+                                            <input type="hidden" name="acao" value="editar_comentario">
+                                            <input type="hidden" name="comentario_id" value="<?= $com['id'] ?>">
+                                            <input type="hidden" name="operador_atual" class="input-operador">
+                                            <textarea name="novo_texto" rows="3" required><?= htmlspecialchars($com['texto']) ?></textarea>
+                                            <div style="margin-top: 5px;">
+                                                <button type="submit" style="width: auto; padding: 5px 10px;">Guardar Edição</button>
+                                                <button type="button" class="btn-cancel" style="width: auto; padding: 5px 10px;" onclick="esconderFormEdicao(<?= $com['id'] ?>)">Cancelar</button>
+                                            </div>
+                                        </form>
 
                                         <?php if (isset($anexos['comentario'][$com['id']])): ?>
                                             <div class="anexos-list" style="margin-top: 5px;">
@@ -314,7 +372,7 @@ foreach ($anexos_raw as $a) {
                                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" target="_blank">👁 Visualizar</a>
                                                         <a href="<?= htmlspecialchars($anexo['caminho_arquivo']) ?>" download="<?= htmlspecialchars($anexo['nome_original']) ?>">⬇ Baixar</a>
 
-                                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($com['autor']) ?>" style="display:none;" onsubmit="return confirm('Excluir permanentemente este arquivo?');">
+                                                        <form method="POST" class="form-excluir-anexo" data-autor="<?= htmlspecialchars($com['autor']) ?>" style="display:none;" onsubmit="return confirm('Eliminar permanentemente este ficheiro?');">
                                                             <input type="hidden" name="acao" value="deletar_anexo">
                                                             <input type="hidden" name="anexo_id" value="<?= $anexo['id'] ?>">
                                                             <button type="submit" class="btn-link-danger">❌</button>
@@ -334,10 +392,10 @@ foreach ($anexos_raw as $a) {
                                 <input type="hidden" name="chamado_id" value="<?= $c['id'] ?>">
                                 <input type="hidden" name="operador_atual" class="input-operador">
 
-                                <textarea name="texto" rows="2" placeholder="Digite seu comentário..." required></textarea>
+                                <textarea name="texto" rows="2" placeholder="Digite o seu comentário ou cole um link aqui..." required></textarea>
 
-                                <label style="display:block; margin-top:5px; font-size: 0.9em;">Anexar arquivos (Máx 50MB):</label>
-                                <input type="file" name="anexos[]" multiple>
+                                <label style="display:block; margin-top:5px; font-size: 0.9em;">Anexar ficheiros (Máx 50MB):</label>
+                                <input type="file" name="anexos[]" multiple onchange="validarTamanhoArquivos(this)">
 
                                 <div style="margin-top: 10px; display: flex; align-items: center; gap: 15px;">
                                     <label>
