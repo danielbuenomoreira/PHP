@@ -2,7 +2,7 @@
 $host = 'localhost'; // Porta personalizada para o ambiente local
 $dbname = 'helpdesk_logistica';
 $user = 'root';
-$pass = 'd92791215'; // Senha do seu ambiente local
+$pass = ''; // Senha do seu ambiente local
 
 try {
     $pdo = new PDO("mysql:host=localhost;port=3306;dbname=$dbname;charset=utf8", $user, $pass);
