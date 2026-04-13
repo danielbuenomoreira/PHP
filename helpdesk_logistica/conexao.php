@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost'; // Porta personalizada para o ambiente local
-$dbname = 'helpdesk_logistica';
+$dbname = 'helpdesk_logistica_antigo';
 $user = 'root';
 $pass = ''; // Senha do seu ambiente local
 
